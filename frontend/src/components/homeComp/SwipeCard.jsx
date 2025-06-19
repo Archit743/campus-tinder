@@ -24,7 +24,7 @@ function SwipeCard({
       }`}>
         <div className="relative">
           <img
-            src={user.image}
+            src={user.image || 'https://via.placeholder.com/400x500?text=No+Image'}
             alt={user.name}
             className="w-full h-96 object-cover"
           />
@@ -36,11 +36,15 @@ function SwipeCard({
         <div className="p-6">
           <p className="text-gray-700 mb-4">{user.bio}</p>
           <div className="flex flex-wrap gap-2">
-            {user.interests.map((interest, idx) => (
-              <span key={idx} className="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm">
-                {interest}
-              </span>
-            ))}
+            {user.interests && user.interests.length > 0 ? (
+              user.interests.map((interest, idx) => (
+                <span key={idx} className="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm">
+                  {interest}
+                </span>
+              ))
+            ) : (
+              <p className="text-gray-600 text-sm">No interests listed</p>
+            )}
           </div>
         </div>
       </div>

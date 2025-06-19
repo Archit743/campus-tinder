@@ -17,7 +17,7 @@ function BottomNavigation({ currentTab, onTabChange, matchesCount }) {
         <button
           onClick={() => onTabChange('matches')}
           className={`flex flex-col items-center py-2 px-4 relative ${
-            currentTab === 'matches' ? 'text-pink-500' : 'text-gray-400'
+            currentTab === 'matches' || currentTab === 'chat' ? 'text-pink-500' : 'text-gray-400'
           }`}
         >
           <MessageCircle className="w-6 h-6" />
