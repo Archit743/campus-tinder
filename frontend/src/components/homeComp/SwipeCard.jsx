@@ -19,8 +19,8 @@ function SwipeCard({
 
   return (
     <div className="relative">
-      <div className={`bg-white rounded-3xl shadow-2xl overflow-hidden transition-all duration-300 ${
-        isAnimating ? (animationDirection === 'left' ? '-translate-x-full rotate-12' : 'translate-x-full rotate-12') : ''
+      <div className={`bg-white rounded-3xl shadow-2xl overflow-hidden transition-transform duration-200 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)] will-change-transform-opacity ${
+        isAnimating ? (animationDirection === 'left' ? '-translate-x-full rotate-6 opacity-0' : 'translate-x-full rotate-6 opacity-0') : ''
       }`}>
         <div className="relative">
           <img
