@@ -213,8 +213,18 @@ router.post('/messages', authenticateToken, async (req, res) => {
     });
     await message.save();
 
-    res.status(201).json({ message: 'Message sent' });
+    // Return the created message object
+    res.status(201).json({
+      message: {
+        _id: message._id.toString(),
+        sender: message.sender.toString(),
+        receiver: message.receiver.toString(),
+        content: message.content,
+        timestamp: message.timestamp.toISOString(),
+      },
+    });
   } catch (error) {
+    console.error('Error sending message:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
@@ -239,15 +249,16 @@ router.get('/messages/:userId', authenticateToken, async (req, res) => {
       .sort('timestamp')
       .populate('sender receiver');
     const formattedMessages = messages.map(msg => ({
-      id: msg._id,
+      id: msg._id.toString(),
       sender: msg.sender._id.toString(),
       receiver: msg.receiver._id.toString(),
       content: msg.content,
-      timestamp: msg.timestamp,
+      timestamp: msg.timestamp.toISOString(),
     }));
 
     res.status(200).json({ messages: formattedMessages });
   } catch (error) {
+    console.error('Error fetching messages:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });

@@ -225,10 +225,12 @@ function Home({ currentUser, onLogout }) {
           });
           const data = await response.json();
           if (response.ok) {
-            // Map sender to 'current' for currentUser.id
             const formattedMessages = data.messages.map(msg => ({
-              ...msg,
+              id: `server-${msg._id || crypto.randomUUID()}`,
               sender: msg.sender === currentUser.id ? 'current' : msg.sender,
+              receiver: msg.receiver,
+              content: msg.content,
+              timestamp: msg.timestamp ? new Date(msg.timestamp) : new Date(),
             }));
             setChatMessages(prev => ({
               ...prev,
@@ -300,20 +302,19 @@ function Home({ currentUser, onLogout }) {
   const handleSendMessage = async (messageContent, tempId) => {
     if (!messageContent.trim() || !activeChat) return;
 
-    // const tempId = `temp-${Date.now()}`;
-    // const optimisticMessage = {
-    //   id: tempId,
-    //   sender: 'current',
-    //   receiver: activeChat.id,
-    //   content: messageContent,
-    //   timestamp: new Date(),
-    // };
+    const optimisticMessage = {
+      id: tempId,
+      sender: 'current',
+      receiver: activeChat.id,
+      content: messageContent,
+      timestamp: new Date(),
+    };
 
-    // // Optimistically update messages
-    // setChatMessages((prev) => ({
-    //   ...prev,
-    //   [activeChat.id]: [...(prev[activeChat.id] || []), optimisticMessage],
-    // }));
+    // Optimistically update messages
+    setChatMessages((prev) => ({
+      ...prev,
+      [activeChat.id]: [...(prev[activeChat.id] || []), optimisticMessage],
+    }));
 
     try {
       const token = localStorage.getItem('token');
@@ -332,11 +333,11 @@ function Home({ currentUser, onLogout }) {
       if (response.ok) {
         // Replace optimistic message with server message
         const serverMessage = {
-          id: data.message._id,
+          id: `server-${data.message._id || crypto.randomUUID()}`,
           sender: 'current',
           receiver: activeChat.id,
           content: messageContent,
-          timestamp: new Date(data.message.timestamp),
+          timestamp: data.message.timestamp ? new Date(data.message.timestamp) : new Date(),
         };
         setChatMessages((prev) => ({
           ...prev,

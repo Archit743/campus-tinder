@@ -3,27 +3,17 @@ import { Send, ArrowLeft } from 'lucide-react';
 
 function ChatView({ activeChat, messages, onBack, onSendMessage }) {
   const [newMessage, setNewMessage] = useState('');
-  const [optimisticMessages, setOptimisticMessages] = useState([]);
   const messagesEndRef = useRef(null);
 
   // Scroll to bottom when messages or optimisticMessages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, optimisticMessages]);
+  }, [messages]);
 
   const handleSendMessage = () => {
     if (!newMessage.trim()) return;
 
-    const tempId = `temp-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-    const optimisticMessage = {
-      id: tempId,
-      sender: 'current',
-      content: newMessage,
-      timestamp: new Date(),
-    };
-
-    // Add optimistic message
-    setOptimisticMessages(prev => [...prev, optimisticMessage]);
+    const tempId = `temp-${crypto.randomUUID()}`; // Generate a temporary ID
     onSendMessage(newMessage, tempId);
     setNewMessage('');
   };
@@ -33,13 +23,6 @@ function ChatView({ activeChat, messages, onBack, onSendMessage }) {
     return timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
-  // Combine server messages and optimistic messages
-  const allMessages = [
-    ...messages,
-    ...optimisticMessages.filter(
-      om => !messages.some(m => m.id === om.id.replace('temp-', ''))
-    ),
-  ];
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
@@ -67,7 +50,7 @@ function ChatView({ activeChat, messages, onBack, onSendMessage }) {
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {allMessages.map((message) => (
+        {messages.map((message) => (
           <div
             key={message.id}
             className={`flex ${message.sender === 'current' ? 'justify-end' : 'justify-start'}`}

@@ -15,7 +15,7 @@ function MatchesTab({ matches, onChatSelect }) {
             >
               <div className="flex items-center space-x-4">
                 <img
-                  src={match.image}
+                  src={match.image || null}
                   alt={match.name}
                   className="w-16 h-16 rounded-full object-cover"
                 />
