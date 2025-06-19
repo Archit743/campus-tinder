@@ -14,7 +14,7 @@ function App() {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await fetch('http://localhost:3000/api/profile', {
+          const response = await fetch('https://campus-tinder.onrender.com/api/profile', {
             headers: { Authorization: `Bearer ${token}` },
           });
           const data = await response.json();

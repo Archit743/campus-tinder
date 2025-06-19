@@ -14,6 +14,9 @@ function Register({ onRegister }) {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
+  const API_URL = 'https://campus-tinder.onrender.com/api'; // Base URL for API requests
+
+
   const handleRegister = async () => {
     if (!registerForm.name || !registerForm.email || !registerForm.password || !registerForm.college || !registerForm.age) {
       setMessage('Please fill in all required fields');
@@ -21,7 +24,7 @@ function Register({ onRegister }) {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/signup', {
+      const response = await fetch(`${API_URL}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

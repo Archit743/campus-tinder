@@ -8,6 +8,10 @@ function ProfileTab({ currentUser, onLogout, onProfileUpdate }) {
   const [uploadSuccess, setUploadSuccess] = useState(null);
   const fileInputRef = useRef(null);
 
+
+  const API_URL = 'https://campus-tinder.onrender.com/api'; // Base URL for API requests
+
+
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -42,7 +46,7 @@ function ProfileTab({ currentUser, onLogout, onProfileUpdate }) {
       const imageUrl = data.secure_url;
 
       const token = localStorage.getItem('token');
-      const updateResponse = await fetch('http://localhost:3000/api/profile', {
+      const updateResponse = await fetch(`${API_URL}/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

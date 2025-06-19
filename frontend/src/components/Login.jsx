@@ -6,6 +6,10 @@ function Login({ onLogin }) {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
+
+  const API_URL = 'https://campus-tinder.onrender.com/api'; // Base URL for API requests
+
+
   const handleLogin = async () => {
     if (!loginForm.email || !loginForm.password) {
       setMessage('Email and password are required');
@@ -13,7 +17,7 @@ function Login({ onLogin }) {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/signin', {
+      const response = await fetch(`${API_URL}/signin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginForm),
@@ -22,7 +26,7 @@ function Login({ onLogin }) {
       setMessage(data.message);
       if (response.ok) {
         localStorage.setItem('token', data.token);
-        const userResponse = await fetch('http://localhost:3000/api/profile', {
+        const userResponse = await fetch(`${API_URL}/profile`, {
           headers: { Authorization: `Bearer ${data.token}` },
         });
         const userData = await userResponse.json();

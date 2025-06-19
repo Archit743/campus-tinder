@@ -22,6 +22,8 @@ function Home({ currentUser, onLogout, onProfileUpdate }) {
   const location = useLocation();
   const { matchId } = useParams();
 
+  const API_URL = 'https://campus-tinder.onrender.com/api'; // Base URL for API requests
+
 
   // Determine current tab from URL
   const getCurrentTab = () => {
@@ -49,7 +51,7 @@ function Home({ currentUser, onLogout, onProfileUpdate }) {
       const fetchMatch = async () => {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch('http://localhost:3000/api/matches', {
+          const response = await fetch(`${API_URL}/matches`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           const data = await response.json();
@@ -84,7 +86,7 @@ function Home({ currentUser, onLogout, onProfileUpdate }) {
       setIsFetchingUsers(true);
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:3000/api/users', {
+        const response = await fetch(`${API_URL}/users`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
@@ -121,7 +123,7 @@ function Home({ currentUser, onLogout, onProfileUpdate }) {
     setIsFetchingMatches(true);
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:3000/api/matches', {
+        const response = await fetch(`${API_URL}/matches`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
@@ -155,7 +157,7 @@ function Home({ currentUser, onLogout, onProfileUpdate }) {
       const fetchMessages = async () => {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch(`http://localhost:3000/api/messages/${activeChat.id}`, {
+          const response = await fetch(`${API_URL}/messages/${activeChat.id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           const data = await response.json();
@@ -190,7 +192,7 @@ function Home({ currentUser, onLogout, onProfileUpdate }) {
     if (direction === 'right') {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:3000/api/matches', {
+        const response = await fetch(`${API_URL}/matches`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -253,7 +255,7 @@ function Home({ currentUser, onLogout, onProfileUpdate }) {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3000/api/messages', {
+      const response = await fetch(`${API_URL}/messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
