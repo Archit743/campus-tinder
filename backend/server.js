@@ -22,6 +22,11 @@ connectDB();
 // Routes
 app.use('/api', authRoutes);
 
+// Health Check Route
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 // Start Server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
