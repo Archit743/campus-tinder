@@ -19,7 +19,6 @@ function App() {
           });
           const data = await response.json();
           if (response.ok) {
-            // Map _id to id for consistency with frontend
             setCurrentUser({
               id: data.user._id,
               name: data.user.name,
@@ -31,17 +30,31 @@ function App() {
               image: data.user.image,
             });
           } else {
-            localStorage.removeItem('token'); // Clear invalid token
+            localStorage.removeItem('token');
           }
         } catch (error) {
           console.error('Error restoring session:', error);
-          localStorage.removeItem('token'); // Clear token on error
+          localStorage.removeItem('token');
         }
       }
       setIsLoading(false);
     };
     restoreSession();
   }, []);
+
+  // Handle profile updates (e.g., new profile picture)
+  const handleProfileUpdate = (updatedUser) => {
+    setCurrentUser({
+      id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      college: updatedUser.college,
+      age: updatedUser.age,
+      bio: updatedUser.bio,
+      interests: updatedUser.interests,
+      image: updatedUser.image,
+    });
+  };
 
   if (isLoading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
@@ -63,6 +76,7 @@ function App() {
                     localStorage.removeItem('token');
                     setCurrentUser(null);
                   }}
+                  onProfileUpdate={handleProfileUpdate}
                 />
               ) : (
                 <Login onLogin={setCurrentUser} />
@@ -79,6 +93,7 @@ function App() {
                     localStorage.removeItem('token');
                     setCurrentUser(null);
                   }}
+                  onProfileUpdate={handleProfileUpdate}
                 />
               ) : (
                 <Login onLogin={setCurrentUser} />
@@ -95,6 +110,7 @@ function App() {
                     localStorage.removeItem('token');
                     setCurrentUser(null);
                   }}
+                  onProfileUpdate={handleProfileUpdate}
                 />
               ) : (
                 <Login onLogin={setCurrentUser} />
@@ -111,6 +127,7 @@ function App() {
                     localStorage.removeItem('token');
                     setCurrentUser(null);
                   }}
+                  onProfileUpdate={handleProfileUpdate}
                 />
               ) : (
                 <Login onLogin={setCurrentUser} />
@@ -127,6 +144,7 @@ function App() {
                     localStorage.removeItem('token');
                     setCurrentUser(null);
                   }}
+                  onProfileUpdate={handleProfileUpdate}
                 />
               ) : (
                 <Login onLogin={setCurrentUser} />

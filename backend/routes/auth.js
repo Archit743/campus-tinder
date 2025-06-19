@@ -82,6 +82,45 @@ router.get('/profile', authenticateToken, async (req, res) => {
   }
 });
 
+// Update user profile (e.g., image URL)
+router.put('/profile', authenticateToken, async (req, res) => {
+  const { image } = req.body;
+
+  if (!image) {
+    return res.status(400).json({ message: 'Image URL is required' });
+  }
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user.userId,
+      { image },
+      { new: true, runValidators: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({
+      message: 'Profile updated successfully',
+      user: {
+        _id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+        college: user.college,
+        age: user.age,
+        bio: user.bio,
+        interests: user.interests,
+        image: user.image,
+      },
+    });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+
 // Get Users for Swiping
 router.get('/users', authenticateToken, async (req, res) => {
   try {
