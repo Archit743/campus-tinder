@@ -10,7 +10,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://campus-cupid-lake.vercel.app',
+  credentials: true
+}));
 app.use(express.json());
 
 // Connect to MongoDB
