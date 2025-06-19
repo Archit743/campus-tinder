@@ -49,7 +49,7 @@ function Register({ onRegister }) {
       <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-4xl">
         <div className="text-center mb-8">
           <div className="text-4xl mb-4">💖</div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Join College Connect</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">Join CampusCupid</h1>
           <p className="text-gray-600">Create your profile</p>
         </div>
         
