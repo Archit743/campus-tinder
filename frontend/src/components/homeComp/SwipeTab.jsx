@@ -12,7 +12,7 @@ function SwipeTab({
   const currentCard = users.length > 0 && currentCardIndex < users.length ? users[currentCardIndex] : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 flex items-center justify-center p-4">
+    <div className="h-auto bg-gradient-to-br from-pink-50 to-purple-50 flex items-center justify-center p-6">
       <div className="w-full max-w-sm">
         <SwipeCard
           user={currentCard}

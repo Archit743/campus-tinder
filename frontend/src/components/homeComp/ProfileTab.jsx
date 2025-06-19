@@ -75,10 +75,10 @@ function ProfileTab({ currentUser, onLogout, onProfileUpdate }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-md mx-auto bg-white rounded-2xl shadow-lg p-8">
+    <div className="h-auto bg-gray-100 p-4">
+      <div className="max-w-md mx-auto bg-white rounded-2xl shadow-lg p-6">
         {/* Profile Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <div className="relative w-32 h-32 mx-auto mb-4">
             <img
               src={image || null}
@@ -123,7 +123,7 @@ function ProfileTab({ currentUser, onLogout, onProfileUpdate }) {
         )}
 
         {/* Profile Details */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <p className="text-gray-900 text-base">{currentUser.email}</p>
